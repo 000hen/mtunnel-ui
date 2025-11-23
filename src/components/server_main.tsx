@@ -10,6 +10,7 @@ import { X } from "lucide-react";
 import { Button } from "./ui/button";
 import CopyButton from "./ui/copy-button";
 import { invoke } from "@tauri-apps/api/core";
+import { Spinner } from "./ui/spinner";
 
 export default function ServerMain() {
     const sessions = useSessions();
@@ -87,10 +88,18 @@ function TokenCard({ token }: { token: string | null }) {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="w-full bg-muted p-4 rounded">
-                    <CopyButton text={token || ""} className="float-end" />
-                    <code className="break-all select-all">{token}</code>
-                </div>
+                {token && token.length > 0 && (
+                    <div className="w-full bg-muted p-4 rounded">
+                        <CopyButton text={token || ""} className="float-end" />
+                        <code className="break-all select-all">{token}</code>
+                    </div>
+                )}
+                {!token && (
+                    <div className="text-muted-foreground flex flex-row items-center gap-2">
+                        <Spinner />
+                        Generating token, please wait...
+                    </div>
+                )}
             </CardContent>
         </Card>
     );
