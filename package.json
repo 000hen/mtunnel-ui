@@ -4,8 +4,9 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "yarn build:sidecar && vite",
+    "build": "yarn build:sidecar && tsc && vite build",
+    "build:sidecar": "node scripts/build-sidecar.js",
     "preview": "vite preview",
     "tauri": "tauri"
   },
