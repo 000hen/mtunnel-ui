@@ -1,6 +1,6 @@
 # mtunnel-ui
 
-Desktop companion for the [`mtunnel`](module/mtunnel) libp2p tunnel. The app wraps the Go sidecar binary in a Tauri shell and exposes a minimal React interface for creating host tunnels, sharing connection tokens, or attaching as a client.
+Desktop companion for the [`000hen/mtunnel-libp2p`](https://github.com/000hen/mtunnel-libp2p) libp2p tunnel. The app wraps the Go sidecar binary in a Tauri shell and exposes a minimal React interface for creating host tunnels, sharing connection tokens, or attaching as a client.
 
 ## Highlights
 
