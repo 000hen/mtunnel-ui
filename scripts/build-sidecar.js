@@ -36,16 +36,39 @@ function build(goos, goarch, outfile) {
 
 console.log("=== Building Sidecar (Tauri v2 format) ===");
 
-// Linux x64
-build("linux", "amd64", "tunnel-x86_64-unknown-linux-gnu");
+// Get the target triple from rustup
+const rustupOutput = execSync('rustup show', { encoding: 'utf-8' });
+const targetMatch = rustupOutput.match(/Default host: (.+)/);
 
-// Windows x64
-build("windows", "amd64", "tunnel-x86_64-pc-windows-msvc.exe");
+if (!targetMatch) {
+    throw new Error('Could not determine target triple from rustup');
+}
 
-// macOS Intel
-build("darwin", "amd64", "tunnel-x86_64-apple-darwin");
+const targetTriple = targetMatch[1].trim();
+console.log('Building for target:', targetTriple);
 
-// macOS Apple Silicon
-build("darwin", "arm64", "tunnel-aarch64-apple-darwin");
+// Parse target triple to get GOOS and GOARCH
+let goos, goarch;
+
+if (targetTriple.includes('linux')) {
+    goos = 'linux';
+} else if (targetTriple.includes('windows')) {
+    goos = 'windows';
+} else if (targetTriple.includes('darwin') || targetTriple.includes('apple')) {
+    goos = 'darwin';
+} else {
+    throw new Error(`Unsupported target: ${targetTriple}`);
+}
+
+if (targetTriple.includes('x86_64')) {
+    goarch = 'amd64';
+} else if (targetTriple.includes('aarch64') || targetTriple.includes('arm64')) {
+    goarch = 'arm64';
+} else {
+    throw new Error(`Unsupported architecture in target: ${targetTriple}`);
+}
+
+const outfile = `tunnel-${targetTriple}${goos === 'windows' ? '.exe' : ''}`;
+build(goos, goarch, outfile);
 
 console.log("=== All sidecar builds completed ===");
