@@ -28,7 +28,7 @@ function build(goos, goarch, outfile) {
         CGO_ENABLED: "0",
     };
 
-    const cmd = `go build -ldflags "-s -w" -o ${output} ${projectDir}/cmd/mtunnel/`;
+    const cmd = `go build -ldflags "-s -w" -o ${output} ${projectDir}/cmd/tunnel/`;
 
     run(cmd, env);
     console.log("Built:", output);
