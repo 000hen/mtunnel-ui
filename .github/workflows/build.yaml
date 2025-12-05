@@ -1,10 +1,10 @@
-name: "publish"
+name: "Build and Publish Tauri App"
 
 on:
   workflow_dispatch:
   push:
-    branches:
-      - release
+    tags:
+      - 'app-v*'
 
 jobs:
   publish-tauri:
